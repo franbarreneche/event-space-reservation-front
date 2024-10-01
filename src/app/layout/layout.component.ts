@@ -8,6 +8,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { routes } from '../app.routes';
 
 @Component({
   selector: 'app-layout',
@@ -18,10 +20,18 @@ import { map, shareReplay } from 'rxjs/operators';
           [mode]="(isHandset$ | async) ? 'over' : 'side'"
           [opened]="(isHandset$ | async) === false">
         <mat-toolbar>Menu</mat-toolbar>
-        <mat-nav-list>
-          <a mat-list-item href="#">Link 1</a>
-          <a mat-list-item href="#">Link 2</a>
-          <a mat-list-item href="#">Link 3</a>
+          <mat-nav-list>
+          @for (item of rootRoutes; track $index) {
+            <a
+                mat-list-item
+                [routerLink]="item.path"
+                #link="routerLinkActive"
+                routerLinkActive
+                [activated]="link.isActive"
+            >
+                {{ item.title }}
+            </a>
+          }
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>
@@ -114,10 +124,13 @@ import { map, shareReplay } from 'rxjs/operators';
     MatListModule,
     MatIconModule,
     AsyncPipe,
+    RouterLink,
+    RouterLinkActive
   ]
 })
 export class LayoutComponent {
   private breakpointObserver = inject(BreakpointObserver);
+  protected rootRoutes = routes.filter(r => r.path);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
