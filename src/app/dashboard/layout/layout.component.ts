@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { routes } from '../app.routes';
 
 @Component({
   selector: 'app-layout',
@@ -21,7 +20,7 @@ import { routes } from '../app.routes';
           [opened]="(isHandset$ | async) === false">
         <mat-toolbar>Menu</mat-toolbar>
           <mat-nav-list>
-          @for (item of rootRoutes; track $index) {
+          @for (item of routes; track $index) {
             <a
                 mat-list-item
                 [routerLink]="item.path"
@@ -130,7 +129,7 @@ import { routes } from '../app.routes';
 })
 export class LayoutComponent {
   private breakpointObserver = inject(BreakpointObserver);
-  protected rootRoutes = routes.filter(r => r.path);
+  protected routes = [{path: 'home', title: 'Home'}, {path: 'reservations', title: 'Reservations'}, {path: 'spaces', title: 'Spaces'}];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
