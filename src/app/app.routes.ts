@@ -30,4 +30,12 @@ export const routes: Routes = [
       ),
       title: 'Spaces'
   },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./features/login/login.component').then(
+        (c) => c.LoginComponent
+      ),
+      title: 'Login'
+  },
 ]

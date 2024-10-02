@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
     <div class="grid-container">
-      <h1 class="mat-h1">Reservations</h1>
+      <h1 class="mat-h1">Reservations (Va una tabla / lista)</h1>
     </div>
   `,
   styles: `
