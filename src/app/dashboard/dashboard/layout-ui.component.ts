@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -22,19 +22,18 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="(isHandset$ | async) === false"
       >
-        <mat-toolbar>Menu</mat-toolbar>
+        <mat-toolbar>Reservations App</mat-toolbar>
         <mat-nav-list>
-          @for (item of routes; track $index) {
-            <a
-              mat-list-item
-              [routerLink]="item.path"
-              #link="routerLinkActive"
-              routerLinkActive
-              [activated]="link.isActive"
-            >
-              {{ item.title }}
-            </a>
+          <a mat-list-item routerLink="home" #link1="routerLinkActive" routerLinkActive [activated]="link1.isActive">Home</a>
+          <a mat-list-item routerLink="reservations" #link2="routerLinkActive" routerLinkActive [activated]="link2.isActive">Reservations</a>
+          @if (userIsAdmin()) {
+            <a mat-list-item routerLink="spaces" #link3="routerLinkActive" routerLinkActive [activated]="link3.isActive">Spaces</a>
           }
+          <div style="flex: 1 1 auto;"></div>
+          <button mat-button>
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>
@@ -49,7 +48,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
               <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
           }
-          <span>event-space-reservation-front</span>
+          <div style="flex: 1 1 auto;"></div>
+          <!-- User Information -->
+          <p>{{ userName() }}</p>
         </mat-toolbar>
         <!-- Add Content Here -->
         <div class="sidenav-scroll-wrapper">
@@ -130,13 +131,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     RouterLinkActive,
   ],
 })
-export class LayoutComponent {
+export class LayoutUiComponent {
+  userName = input<string>('');
+  userIsAdmin = input<boolean>(false);
   private breakpointObserver = inject(BreakpointObserver);
-  protected routes = [
-    { path: 'home', title: 'Home' },
-    { path: 'reservations', title: 'Reservations' },
-    { path: 'spaces', title: 'Spaces' },
-  ];
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
