@@ -14,7 +14,7 @@ export class AuthService {
     return this.access_token !== null;
   }
 
-  getToken(): string {
+  getToken(): string|null {
     return this.access_token;
   }
 
