@@ -8,6 +8,12 @@ const authGuard: CanActivateFn = (): boolean | UrlTree => {
   return authService.isAuthenticated() || router.createUrlTree(['/login']);
 };
 
+const loginGuard: CanActivateFn = (): boolean | UrlTree => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  return !authService.isAuthenticated() || router.createUrlTree(['/dashboard']);
+};
+
 export const routes: Routes = [
   {
     path: '',
@@ -23,6 +29,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [loginGuard],
     loadComponent: () =>
       import('./login/login-feature.component').then(
         (c) => c.LoginFeatureComponent,
