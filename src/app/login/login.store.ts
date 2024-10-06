@@ -4,6 +4,7 @@ import { catchError, EMPTY, finalize, switchMap, tap } from 'rxjs';
 import { LoginService } from './login.service';
 import { ToastNotificationService } from '../shared/toast-notification.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../shared/auth.service';
 
 interface State {
   isLoading: boolean;
@@ -18,6 +19,7 @@ export class LoginStore extends ComponentStore<State> {
   constructor(
     private readonly loginService: LoginService,
     private readonly toastService: ToastNotificationService,
+    private readonly authService: AuthService,
     private readonly router: Router,
   ) {
     super(initialState);
@@ -41,7 +43,8 @@ export class LoginStore extends ComponentStore<State> {
       tap(() => this.updateIsLoading(true)),
       switchMap((form) =>
         this.loginService.login(form as any).pipe(
-          tap((data) => {
+          tap((token) => {
+            this.authService.setToken(token);
             this.toastService.showSuccess('Login Successful!');
             this.router.navigate(['/dashboard']);
           }),
