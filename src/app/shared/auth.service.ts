@@ -14,6 +14,10 @@ export class AuthService {
     return this.access_token !== null;
   }
 
+  getToken(): string {
+    return this.access_token;
+  }
+
   setToken(token: {access_token: string, token_type: string, expires_in: number}): void {
     this.access_token = token.access_token;
     this.saveTokenToLocalStorage(token.access_token);
