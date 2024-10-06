@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from "./home/home.component";
-import {ReservationManagementComponent} from "./reservation-management/reservation-management.component";
-import {SpaceManagementComponent} from "./space-management/space-management.component";
-import {DashboardComponent} from "./dashboard.component";
+import { HomeComponent } from './home/home.component';
+import { ReservationManagementComponent } from './reservation-management/reservation-management.component';
+import { SpaceManagementComponent } from './space-management/space-management.component';
+import { DashboardComponent } from './dashboard.component';
 
 export const routes: Routes = [
   {
@@ -12,23 +12,23 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'home'
+        redirectTo: 'home',
       },
       {
         path: 'home',
         component: HomeComponent,
-        title: 'Home'
+        title: 'Home',
       },
       {
         path: 'reservations',
         component: ReservationManagementComponent,
-        title: 'Reservations'
+        title: 'Reservations',
       },
       {
         path: 'spaces',
         component: SpaceManagementComponent,
-        title: 'Spaces'
+        title: 'Spaces',
       },
-    ]
+    ],
   },
-]
+];

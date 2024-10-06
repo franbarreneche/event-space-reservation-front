@@ -13,8 +13,6 @@ import { Component } from '@angular/core';
     .grid-container {
       margin: 20px;
     }
-  `
+  `,
 })
-export class SpaceManagementComponent {
-
-}
+export class SpaceManagementComponent {}

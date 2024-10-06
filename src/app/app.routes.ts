@@ -1,12 +1,18 @@
-import { CanActivateFn, Router, RouterStateSnapshot, Routes, UrlTree} from '@angular/router';
-import {inject} from "@angular/core";
-import {AuthService} from "./shared/auth.service";
+import {
+  CanActivateFn,
+  Router,
+  RouterStateSnapshot,
+  Routes,
+  UrlTree,
+} from '@angular/router';
+import { inject } from '@angular/core';
+import { AuthService } from './shared/auth.service';
 
 const authGuard: CanActivateFn = (): boolean | UrlTree => {
   const authService = inject(AuthService);
   const router = inject(Router);
   return authService.isAuthenticated() || router.createUrlTree(['/login']);
-}
+};
 
 export const routes: Routes = [
   {
@@ -18,21 +24,19 @@ export const routes: Routes = [
     path: 'dashboard',
     canActivate: [authGuard],
     loadChildren: () =>
-      import('./dashboard/dashboard.routes').then(r => r.routes),
-      title: 'Dashboard'
+      import('./dashboard/dashboard.routes').then((r) => r.routes),
+    title: 'Dashboard',
   },
   {
     path: 'login',
     loadComponent: () =>
       import('./login/login-feature.component').then(
-        (c) => c.LoginFeatureComponent
+        (c) => c.LoginFeatureComponent,
       ),
-      title: 'Login'
+    title: 'Login',
   },
   {
     path: '**',
     redirectTo: '/',
   },
-]
-
-
+];

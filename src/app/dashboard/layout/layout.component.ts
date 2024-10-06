@@ -14,21 +14,25 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   selector: 'app-layout',
   template: `
     <mat-sidenav-container class="sidenav-container">
-      <mat-sidenav #drawer class="sidenav" fixedInViewport
-          [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-          [mode]="(isHandset$ | async) ? 'over' : 'side'"
-          [opened]="(isHandset$ | async) === false">
+      <mat-sidenav
+        #drawer
+        class="sidenav"
+        fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false"
+      >
         <mat-toolbar>Menu</mat-toolbar>
-          <mat-nav-list>
+        <mat-nav-list>
           @for (item of routes; track $index) {
             <a
-                mat-list-item
-                [routerLink]="item.path"
-                #link="routerLinkActive"
-                routerLinkActive
-                [activated]="link.isActive"
+              mat-list-item
+              [routerLink]="item.path"
+              #link="routerLinkActive"
+              routerLinkActive
+              [activated]="link.isActive"
             >
-                {{ item.title }}
+              {{ item.title }}
             </a>
           }
         </mat-nav-list>
@@ -40,7 +44,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
               type="button"
               aria-label="Toggle sidenav"
               mat-icon-button
-              (click)="drawer.toggle()">
+              (click)="drawer.toggle()"
+            >
               <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
           }
@@ -54,7 +59,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
         </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
-
   `,
   styles: `
     .sidenav-container {
@@ -113,7 +117,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
         padding: 8px;
       }
     }
-
   `,
   standalone: true,
   imports: [
@@ -124,16 +127,21 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     MatIconModule,
     AsyncPipe,
     RouterLink,
-    RouterLinkActive
-  ]
+    RouterLinkActive,
+  ],
 })
 export class LayoutComponent {
   private breakpointObserver = inject(BreakpointObserver);
-  protected routes = [{path: 'home', title: 'Home'}, {path: 'reservations', title: 'Reservations'}, {path: 'spaces', title: 'Spaces'}];
+  protected routes = [
+    { path: 'home', title: 'Home' },
+    { path: 'reservations', title: 'Reservations' },
+    { path: 'spaces', title: 'Spaces' },
+  ];
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
     .pipe(
-      map(result => result.matches),
-      shareReplay()
+      map((result) => result.matches),
+      shareReplay(),
     );
 }
