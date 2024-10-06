@@ -1,10 +1,4 @@
-import {
-  CanActivateFn,
-  Router,
-  RouterStateSnapshot,
-  Routes,
-  UrlTree,
-} from '@angular/router';
+import { CanActivateFn, Router, Routes, UrlTree } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from './shared/auth.service';
 
