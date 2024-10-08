@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { HomeFeatureComponent } from './home/home-feature.component';
 import { ReservationManagementComponent } from './reservation-management/reservation-management.component';
 import { SpaceManagementComponent } from './space-management/space-management.component';
 import { DashboardFeatureComponent } from './dashboard/dashboard-feature.component';
@@ -18,7 +18,7 @@ export const routes: Routes = [
       },
       {
         path: 'home',
-        component: HomeComponent,
+        component: HomeFeatureComponent,
         title: 'Home',
       },
       {
